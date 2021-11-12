@@ -4,13 +4,13 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
-if (window.location.pathname === '/notes') {
+// if (window.location.pathname === '/notes') 
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
-}
+
 
 // Show an element
 const show = (elem) => {
@@ -33,7 +33,8 @@ const getNotes = () =>
     },
   });
 
-const saveNote = (note) =>
+const saveNote = (note) => {
+  console.log(note);
   fetch('/api/notes', {
     method: 'POST',
     headers: {
@@ -41,8 +42,9 @@ const saveNote = (note) =>
     },
     body: JSON.stringify(note),
   });
+}
 
-const deleteNote = (id) =>
+const deleteNote = (id) 
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
@@ -71,11 +73,10 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value,
   };
-  saveNote(newNote).then(() => {
+  saveNote(newNote); 
     getAndRenderNotes();
     renderActiveNote();
-  });
-};
+  };
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {
@@ -165,19 +166,19 @@ const renderNoteList = async (notes) => {
     noteListItems.push(li);
   });
 
-  if (window.location.pathname === '/notes') {
+  // if (window.location.pathname === '/notes') {
     noteListItems.forEach((note) => noteList[0].append(note));
-  }
+  // }
 };
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => getNotes().then(renderNoteList);
 
-if (window.location.pathname === '/notes') {
+// if (window.location.pathname === '/notes') {
   saveNoteBtn.addEventListener('click', handleNoteSave);
   newNoteBtn.addEventListener('click', handleNewNoteView);
   noteTitle.addEventListener('keyup', handleRenderSaveBtn);
   noteText.addEventListener('keyup', handleRenderSaveBtn);
-}
+
 
 getAndRenderNotes();

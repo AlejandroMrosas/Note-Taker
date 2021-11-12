@@ -5,15 +5,14 @@ const uuid = require('uuid');
 const notes = require('../db/db.json');
 
 
-module.exports = function (app) {
-
-    router.get("/api/notes/", function(req, res) {
+    router.get("/notes", function(req, res) {
         const results = notes;
         res.send(results);
     })
 
-    router.post('/api/notes/', function(req, res) {
+    router.post('/notes', function(req, res) {
         console.log(JSON.stringify(req.body));
+        createNotes(req.body, notes);
         const results = notes;
         res.json('added notes');
 });
@@ -27,6 +26,6 @@ function createNotes(body, notes) {
             JSON.stringify({ addNotes }, null, 2)
             );
             return addNotes;
-        };
-    
-};
+        };  
+
+        module.exports =router;
